@@ -14,11 +14,14 @@ func Load(i any) {
 	LoadPrefix(i, "")
 }
 
-func loadPrefix(i any, prefix string) error {
+func loadPrefix(i any, prefix string, fileName string) error {
 	yamlDecoder := gunyaml.New()
-	fileName := "config"
-	if prefix != "" {
-		fileName = prefix
+	if fileName == "" {
+		if prefix != "" {
+			fileName = prefix
+		} else {
+			fileName = "config"
+		}
 	}
 	homeDir, _ := os.UserHomeDir()
 	godotenv.Load()
@@ -60,7 +63,14 @@ func loadPrefix(i any, prefix string) error {
 }
 
 func LoadPrefix(i any, prefix string) {
-	err := loadPrefix(i, prefix)
+	err := loadPrefix(i, prefix, "")
+	if err != nil {
+		panic(err)
+	}
+}
+
+func LoadNamed(i any, prefix string, fileName string) {
+	err := loadPrefix(i, prefix, fileName)
 	if err != nil {
 		panic(err)
 	}
