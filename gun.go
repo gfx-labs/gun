@@ -60,10 +60,8 @@ func loadPrefix(i any, prefix string) error {
 }
 
 func LoadPrefix(i any, prefix string) {
-
 	err := loadPrefix(i, prefix)
 	if err != nil {
 		panic(err)
 	}
-
 }
